@@ -6,11 +6,18 @@ public class AnalizadorAccesosAServidor
 {
     private ArrayList<Acceso> accesos;
 
+    /**
+     * Constructor de la clase AnalizadorAccesosAServidor.
+     */
     public AnalizadorAccesosAServidor() 
     {
         accesos = new ArrayList<>();
     }
 
+    /**
+     * Metodo que analiza los archivos .log.
+     * @param archivo : la ruta del archivo que vamos a analizar.
+     */
     public void analizarArchivoDeLog(String archivo)
     {
         accesos.clear();
@@ -29,13 +36,15 @@ public class AnalizadorAccesosAServidor
         }
     }
 
+    /**
+     * Metodo que devuelve la hora con mas accesos
+     * @return valorADevolver: la hora con mas accesos.
+     */
     public int obtenerHoraMasAccesos() 
     {
         int valorADevolver = -1;
-
         if (!accesos.isEmpty()) {
             int[] accesosPorHora = new int[24];
-
             for (Acceso accesoActual : accesos) {
                 int horaAccesoActual = accesoActual.getHora();
                 accesosPorHora[horaAccesoActual] = accesosPorHora[horaAccesoActual] + 1;
@@ -49,16 +58,18 @@ public class AnalizadorAccesosAServidor
                     horaDeAccesosMasAlto = i;
                 }
             }
-
             valorADevolver = horaDeAccesosMasAlto;                      
         }
-
         return valorADevolver;
     }
 
+    /**
+     * Metodo que devuelve la pagina web mas solicitada
+     * @return paginaMasSolicitada: la pagina web mas solicitada.
+     */
     public String paginaWebMasSolicitada()
     {
-        String aDevolver = null;
+        String paginaMasSolicitada = null;
         int contador2 = 0;
         if (accesos.size()>0)
         {
@@ -74,19 +85,23 @@ public class AnalizadorAccesosAServidor
                         contador ++;
                         if (contador > contador2 )
                         {
-                            aDevolver = primeraWeb;
+                            paginaMasSolicitada = primeraWeb;
                             contador2 = contador;
                         }
                     }
                 }
             }
         }
-        return aDevolver;
+        return paginaMasSolicitada;
     }
 
+    /**
+     * Metodo que devuelve la direccion ip con mas accesos exitosos
+     * @return clienteMasAccesos: la direccion ip con mas accesos exitosos (la mayor en caso de empate).
+     */
     public String clienteConMasAccesosExitosos()
     {
-        String aDevolver = null;
+        String clienteMasAccesos = null;
         int contador2 = 0;
         if (accesos.size()>0)
         {
@@ -103,19 +118,19 @@ public class AnalizadorAccesosAServidor
                         contador ++;
                         if (contador > contador2)
                         {
-                            aDevolver = primerAcceso.getIp();
+                            clienteMasAccesos = primerAcceso.getIp();
                             contador2 = contador;
                         }   
                         if (contador == contador2 && primerAcceso.getUltimoNumIp() > accesoAComparar.getUltimoNumIp())
                         {
-                            aDevolver = primerAcceso.getIp();
+                            clienteMasAccesos = primerAcceso.getIp();
                             contador2 = contador;
                         }
                     }
                 }
             }
         }
-        return aDevolver;
+        return clienteMasAccesos;
     }
 
 }
