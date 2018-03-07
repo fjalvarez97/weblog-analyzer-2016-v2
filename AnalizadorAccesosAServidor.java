@@ -56,7 +56,6 @@ public class AnalizadorAccesosAServidor
         return valorADevolver;
     }
 
-    
     public String paginaWebMasSolicitada()
     {
         String aDevolver = null;
@@ -87,7 +86,36 @@ public class AnalizadorAccesosAServidor
 
     public String clienteConMasAccesosExitosos()
     {
-        return "";
+        String aDevolver = null;
+        int contador2 = 0;
+        if (accesos.size()>0)
+        {
+            for (int i = 0; accesos.size() > i; i++)
+            {
+                Acceso primerAcceso = accesos.get(i);
+                int contador = 0;
+                for (int j = 0; accesos.size() > j; j++)
+                {
+                    Acceso accesoAComparar = accesos.get(j);
+
+                    if (primerAcceso.getIp().equals(accesoAComparar.getIp()) && accesoAComparar.getCodRespuesta() == 200 && primerAcceso.getCodRespuesta() == 200)
+                    {
+                        contador ++;
+                        if (contador > contador2)
+                        {
+                            aDevolver = primerAcceso.getIp();
+                            contador2 = contador;
+                        }   
+                        if (contador == contador2 && primerAcceso.getUltimoNumIp() > accesoAComparar.getUltimoNumIp())
+                        {
+                            aDevolver = primerAcceso.getIp();
+                            contador2 = contador;
+                        }
+                    }
+                }
+            }
+        }
+        return aDevolver;
     }
 
 }
