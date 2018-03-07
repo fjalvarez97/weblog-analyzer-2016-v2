@@ -62,4 +62,11 @@ public class Acceso
     {
         return codRespuesta;
     }
+
+    public int getUltimoNumIp()
+    {
+        String ip2 = ip.substring(ip.length()-2,ip.length()).replace(".","");
+        int numIp = Integer.parseInt(ip2);
+        return numIp;
+    }
 }
